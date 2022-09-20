@@ -85,6 +85,7 @@
             id="exampleFormControlInput1"
             placeholder="Product Name"
             name="name"
+            value="{{ product.name }}"
           />
         </div>
         <div class="mb-3">
@@ -95,6 +96,7 @@
             id="exampleFormControlInput1"
             placeholder="Product Price"
             name="price"
+            value="{{product.price}}"
           />
         </div>
         <div class="mb-3">
@@ -106,15 +108,15 @@
             aria-label="Default select example"
             name="category"
           >
-            <option value="el">Electronic</option>
-            <option value="gr">Groceris</option>
+            <option value="el" {% if product.category == 'el' %} selected {% endif %}>Electronic</option>
+            <option value="gr" {% if product.category == 'gr' %} selected {% endif %}>Grocerise</option>
           </select>
         </div>
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label"
             >Is Available</label
           >
-          <input class="form-check-input" type="checkbox" name="is_available" />
+          <input class="form-check-input" type="checkbox" name="is_available" {% if product.is_available %}checked {% endif%} />
         </div>
         <div class="mb-3">
           <label for="exampleFormControlTextarea1" class="form-label"
@@ -125,9 +127,9 @@
             id="exampleFormControlTextarea1"
             rows="3"
             name="desc"
-          ></textarea>
+          >{{product.description}}</textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary">Update</button>
       </form>
     </div>
 
