@@ -1,5 +1,5 @@
 from math import prod
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
@@ -42,7 +42,7 @@ def create_product(request):
         product.save()
 
 
-        return HttpResponse(f"Created id - {product.id} - {product.created}")
+        return redirect('/products/')
 
 
 # update product
@@ -50,10 +50,38 @@ def update_product(request, prod_id):
     if request.method == 'GET':
         product = Product.objects.get(id=prod_id)
         return render(request, 'products/update-product.html', {'product': product})
+    else:
+        name = request.POST.get('name')
+        price = request.POST.get('price')
+        is_available = request.POST.get('is_available')
+        category = request.POST.get('category')
+        desc = request.POST.get('desc')
+
+        # product = Product.objects.get(id=prod_id)
+
+        # product.name = name
+        # product.price = price
+        # product.is_available = bool(is_available)
+        # product.category = category
+        # product.description = desc
+
+        products = Product.objects.filter(id=prod_id)
+        products.update(name = name, price=price, is_available=bool(is_available), category= category, description= desc)
+
+        # products.save()
+
+
+        return HttpResponse(f"Update id - {products[0].id} - {products[0].created}")
+        # return HttpResponse(f"Update id - {product.id} - {product.created}")
 
 # delete product
 def delete_product(request, prod_id):
-    pass
+    product = Product.objects.get(id= prod_id)
+
+    pro_id = product.id
+    product.delete()
+
+    return HttpResponse(f"Deleted {pro_id}")
 
 
 
