@@ -2,10 +2,9 @@ from math import prod
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
 
 from products.models import Product
-
-import decimal
 
 
 # Create your views here.
@@ -33,16 +32,15 @@ def create_product(request):
 
         product = Product.objects.create(
             name=name, price=price,
-            is_available=bool(is_available), 
+            is_available=bool(is_available),
             category=category,
             description=desc
         )
 
-        product.price = float(product.price) +  100
-        product.save()
+        # product.price = float(product.price) +  100
+        # product.save()
 
-
-        return redirect('/products/')
+        return redirect(reverse_lazy('products:list'))
 
 
 # update product
@@ -66,17 +64,19 @@ def update_product(request, prod_id):
         # product.description = desc
 
         products = Product.objects.filter(id=prod_id)
-        products.update(name = name, price=price, is_available=bool(is_available), category= category, description= desc)
+        products.update(name=name, price=price, is_available=bool(
+            is_available), category=category, description=desc)
 
         # products.save()
 
-
-        return HttpResponse(f"Update id - {products[0].id} - {products[0].created}")
+        return redirect(reverse_lazy('products:update', args=[prod_id]))
         # return HttpResponse(f"Update id - {product.id} - {product.created}")
 
 # delete product
+
+
 def delete_product(request, prod_id):
-    product = Product.objects.get(id= prod_id)
+    product = Product.objects.get(id=prod_id)
 
     pro_id = product.id
     product.delete()
@@ -84,22 +84,19 @@ def delete_product(request, prod_id):
     return HttpResponse(f"Deleted {pro_id}")
 
 
-
-
-
 @login_required
 def show_news(request):
     print("request", request.path)
     return HttpResponse("Welcome to Django")
 
+
 @login_required
 def home(request):
-    
+
     #print("request", dir(request))
-    #print(request.path)
+    # print(request.path)
 
     # if request.user.is_authenticated:
-    return render(request, 'index.html',{"title": "Hello World 2", "name": "Ahmad"})
+    return render(request, 'index.html', {"title": "Hello World 2", "name": "Ahmad"})
     # else:
     #     return HttpResponse("Please Login to access this page.")
-

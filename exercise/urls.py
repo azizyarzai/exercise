@@ -18,6 +18,8 @@ from django.urls import path, include
 from django.http import HttpResponse
 from products.views import show_news, home
 
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -25,4 +27,4 @@ urlpatterns = [
     path("products/", include("products.urls")),
     path('news/hi/', show_news),
     path("", home)
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

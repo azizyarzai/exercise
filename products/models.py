@@ -7,24 +7,23 @@ CATEGORIES = [
     ("gr", 'Groceries')
 ]
 
-def check_price(val):
-    if val > 12000:
-        return val
-    raise ValidationError("Please enter above 12000.")
 
+def check_price(val):
+    if val > 0:
+        return val
+    raise ValidationError("Please enter a positive.")
 
 
 class Product(models.Model):
-    name = models.CharField(unique=True, max_length=10)
-    price = models.DecimalField(max_digits=10, decimal_places=2,validators=[check_price])
+    name = models.CharField(unique=True, max_length=150)
+    price = models.DecimalField(
+        max_digits=10, decimal_places=2, validators=[check_price])
     category = models.CharField(max_length=20, choices=CATEGORIES)
     is_available = models.BooleanField(default=True)
-    description = models.TextField(null=True, blank=True, default="This is a product")
+    description = models.TextField(
+        null=True, blank=True, default="This is a product")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-
     def __str__(self) -> str:
         return f"{self.name} - {self.pk}"
-    
-
