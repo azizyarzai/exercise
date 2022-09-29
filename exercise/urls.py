@@ -27,4 +27,7 @@ urlpatterns = [
     path("products/", include("products.urls")),
     path('news/hi/', show_news),
     path("", home)
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

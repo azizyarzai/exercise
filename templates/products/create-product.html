@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<form action="/products/create/" method="post">
+<form action="/products/create/" method="post" >
         {% csrf_token %}
         <h1 style="text-align: center">Create Product</h1>
         <div class="mb-3">
@@ -40,7 +40,13 @@
           <label for="exampleFormControlInput1" class="form-label"
             >Is Available</label
           >
-          <input class="form-check-input" type="checkbox" name="is_available" />
+          <input class="form-check-input" type="checkbox" name="is_available"s />
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            >Image</label
+          >
+          <input type="file" name="image" />
         </div>
         <div class="mb-3">
           <label for="exampleFormControlTextarea1" class="form-label"

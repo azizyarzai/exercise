@@ -20,6 +20,7 @@ class Product(models.Model):
         max_digits=10, decimal_places=2, validators=[check_price])
     category = models.CharField(max_length=20, choices=CATEGORIES)
     is_available = models.BooleanField(default=True)
+    image = models.ImageField(upload_to='products-imgs', null=True, blank=True)
     description = models.TextField(
         null=True, blank=True, default="This is a product")
     created = models.DateTimeField(auto_now_add=True)

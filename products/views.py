@@ -29,12 +29,14 @@ def create_product(request):
         is_available = request.POST.get('is_available')
         category = request.POST.get('category')
         desc = request.POST.get('desc')
+        image = request.FILES.get('image')
 
         product = Product.objects.create(
             name=name, price=price,
             is_available=bool(is_available),
             category=category,
-            description=desc
+            description=desc,
+            image=image
         )
 
         # product.price = float(product.price) +  100

@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,6 +14,8 @@
       integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
       crossorigin="anonymous"
     />
+    <!-- <link rel="stylesheet" href="/files/test.css" /> -->
+    <link rel="stylesheet" href="{% static 'test.css' %}" />
   </head>
   <body>
     <nav class="navbar navbar-expand-lg bg-light">
@@ -93,6 +97,6 @@
       crossorigin="anonymous"
     ></script>
 
-    <script src="/static/script.js"></script>
+    <script src="{% static 'hi/script.js' %}"></script>
   </body>
 </html>
