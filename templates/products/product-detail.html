@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div>
+    <div>
+        {% if product.image %}
+        <img src="{{ product.image.url }}" class="card-img-top my-mg" alt="image"  />
+        <!-- <p>{{product.image.path}}</p> -->
+        {% else %}
+        <img
+          src="{% static 'imgs/Default.PNG' %}"
+          class="card-img-top my-mg"
+          alt="image"
+        />
+        {% endif %}
+    </div>
+    <div>
+        <h3>{{product.name}}</h3>
+        <p class="card-text">Price: {{ product.price }}AFN</p>
+      <p class="card-text">Category: {{ product.category }}</p>
+      <p class="card-text">Desc: {{ product.description }}</p>
+      <p class="card-text">Updated: {{ product.updated }}</p>
+      <p class="card-text">Created: {{ product.created }}</p>
+    </div>
+</div>
+{% endblock content %}

@@ -1,8 +1,11 @@
 from math import prod
+import os
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
+
+from django.db.models import Q
 
 from products.models import Product
 
@@ -11,11 +14,11 @@ from products.models import Product
 
 # list product
 def list_products(request):
-    products = Product.objects.all()  # SELECT * FROM products.
-    # print(products)
-    # for product in products:
-    #     print(product.name, product.price)
+    # products = Product.objects.filter(
+    #     Q(is_available=True) | Q(category='el'), price=13100)  # SELECT * FROM products.s
+    # print(products.query)
 
+    products = Product.objects.all()
     return render(request, 'products/list-products.html', {'products': products})
 
 
@@ -56,20 +59,22 @@ def update_product(request, prod_id):
         is_available = request.POST.get('is_available')
         category = request.POST.get('category')
         desc = request.POST.get('desc')
+        image = request.FILES.get('image')
 
-        # product = Product.objects.get(id=prod_id)
+        product = Product.objects.get(id=prod_id)
 
-        # product.name = name
-        # product.price = price
-        # product.is_available = bool(is_available)
-        # product.category = category
-        # product.description = desc
+        product.name = name
+        product.price = price
+        product.is_available = bool(is_available)
+        product.category = category
+        product.description = desc
 
-        products = Product.objects.filter(id=prod_id)
-        products.update(name=name, price=price, is_available=bool(
-            is_available), category=category, description=desc)
+        if image:
+            if os.path.exists(product.image.path):
+                os.remove(product.image.path)
+            product.image = image
 
-        # products.save()
+        product.save()
 
         return redirect(reverse_lazy('products:update', args=[prod_id]))
         # return HttpResponse(f"Update id - {product.id} - {product.created}")
@@ -81,6 +86,10 @@ def delete_product(request, prod_id):
     product = Product.objects.get(id=prod_id)
 
     pro_id = product.id
+
+    if os.path.exists(product.image.path):
+        os.remove(product.image.path)
+
     product.delete()
 
     return HttpResponse(f"Deleted {pro_id}")
@@ -102,3 +111,8 @@ def home(request):
     return render(request, 'index.html', {"title": "Hello World 2", "name": "Ahmad"})
     # else:
     #     return HttpResponse("Please Login to access this page.")
+
+
+def product_detail(request, prod_id):
+    product = Product.objects.get(id=prod_id)
+    return render(request, 'products/product-detail.html', {'product': product})

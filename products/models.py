@@ -1,4 +1,5 @@
 
+from sre_constants import MAX_UNTIL
 from django.db import models
 from django.forms import ValidationError
 
@@ -28,3 +29,14 @@ class Product(models.Model):
 
     def __str__(self) -> str:
         return f"{self.name} - {self.pk}"
+
+    class Meta:
+        db_table = 'product'
+        ordering = ['price']
+
+
+class Test(models.Model):
+    name = models.CharField(max_length=150)
+
+    class Meta:
+        managed = True
