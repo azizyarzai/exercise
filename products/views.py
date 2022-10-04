@@ -49,9 +49,9 @@ def create_product(request):
 
 
 # update product
-def update_product(request, prod_id):
+def update_product(request, prod_slug):
     if request.method == 'GET':
-        product = Product.objects.get(id=prod_id)
+        product = Product.objects.get(slug=prod_slug)
         return render(request, 'products/update-product.html', {'product': product})
     else:
         name = request.POST.get('name')
@@ -61,7 +61,7 @@ def update_product(request, prod_id):
         desc = request.POST.get('desc')
         image = request.FILES.get('image')
 
-        product = Product.objects.get(id=prod_id)
+        product = Product.objects.get(slug=prod_slug)
 
         product.name = name
         product.price = price
@@ -76,23 +76,21 @@ def update_product(request, prod_id):
 
         product.save()
 
-        return redirect(reverse_lazy('products:update', args=[prod_id]))
+        return redirect(reverse_lazy('products:update', args=[prod_slug]))
         # return HttpResponse(f"Update id - {product.id} - {product.created}")
 
 # delete product
 
 
-def delete_product(request, prod_id):
-    product = Product.objects.get(id=prod_id)
-
-    pro_id = product.id
+def delete_product(request, prod_slug):
+    product = Product.objects.get(slug=prod_slug)
 
     if os.path.exists(product.image.path):
         os.remove(product.image.path)
 
     product.delete()
 
-    return HttpResponse(f"Deleted {pro_id}")
+    return HttpResponse(f"Deleted {prod_slug}")
 
 
 @login_required
@@ -113,6 +111,6 @@ def home(request):
     #     return HttpResponse("Please Login to access this page.")
 
 
-def product_detail(request, prod_id):
-    product = Product.objects.get(id=prod_id)
+def product_detail(request, prod_slug):
+    product = Product.objects.get(slug=prod_slug)
     return render(request, 'products/product-detail.html', {'product': product})

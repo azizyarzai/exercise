@@ -24,13 +24,13 @@
       <p class="card-text">Created: {{ product.created }}</p>
       <!-- <a href="/products/update/{{product.id}}/" class="btn btn-primary">Update</a>
           <a href="/products/delete/{{product.id}}/" class="btn btn-danger">Delete</a> -->
-      <a href="{% url 'products:update' product.id %}" class="btn btn-primary"
+      <a href="{% url 'products:update' product.slug %}" class="btn btn-primary"
         >Update</a
       >
-      <a href="{% url 'products:delete' product.id %}" class="btn btn-danger"
+      <a href="{% url 'products:delete' product.slug %}" class="btn btn-danger"
         >Delete</a
       >
-      <a href="{% url 'products:detail' product.id %}" class="btn btn-warning"
+      <a href="{% url 'products:detail' product.slug %}" class="btn btn-warning"
         >View more ...</a
       >
     </div>
