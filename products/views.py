@@ -1,3 +1,4 @@
+from django.views.generic.base import View, TemplateView
 from math import prod
 import os
 from django.shortcuts import render, redirect
@@ -18,7 +19,9 @@ def list_products(request):
     #     Q(is_available=True) | Q(category='el'), price=13100)  # SELECT * FROM products.s
     # print(products.query)
 
-    products = Product.objects.all()
+    products = Product.objects.get_availibes()
+    for p in products:
+        print(p.get_price)
     return render(request, 'products/list-products.html', {'products': products})
 
 
@@ -114,3 +117,18 @@ def home(request):
 def product_detail(request, prod_slug):
     product = Product.objects.get(slug=prod_slug)
     return render(request, 'products/product-detail.html', {'product': product})
+
+
+# class ListProduct(View):
+#     def get(self, request, *args, **kwargs):
+#         products = Product.objects.all()
+
+#         return render(request, 'products/list-products.html', {'products': products})
+class ListProduct(TemplateView):
+    # template_name = 'about.html'
+
+    # def get_template_names(self):
+
+    #     return ['about.html']
+
+    pass

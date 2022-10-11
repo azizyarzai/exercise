@@ -1,11 +1,10 @@
 
-from enum import unique
-from sre_constants import MAX_UNTIL
 from django.db import models
 from django.forms import ValidationError
 from django.utils.text import slugify
 from products.utils import unique_slug_generator
 from django.db.models.signals import pre_save, post_save
+from products.model_managers import ProductManager
 
 CATEGORIES = [
     ("el", 'Electronics'),
@@ -20,7 +19,12 @@ def check_price(val):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=150)
+    name = models.CharField(
+        max_length=150, help_text="Name should be unique.", unique=True,
+        error_messages={
+            "blank": "Please enter a value.",
+            'unique': "Please enter a unique name.",
+        })
     slug = models.SlugField(max_length=500, unique=True)
     price = models.DecimalField(
         max_digits=10, decimal_places=2, validators=[check_price])
@@ -31,6 +35,14 @@ class Product(models.Model):
         null=True, blank=True, default="This is a product")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    objects = ProductManager()
+    # test = ProductManager()
+
+    # use it for calculated fieles
+    @property
+    def get_price(self):
+        return int(self.price)
 
     def save(self):
         # self.price = float(self.price) + 10
