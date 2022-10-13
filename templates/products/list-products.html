@@ -1,5 +1,7 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
-
+{% extends 'base.html' %} 
+{% load static %} 
+{% block content %}
+<h1>Title: {{title}}</h1>
 <div style="display: flex; justify-content: center; flex-wrap: wrap">
   {% for product in products %}
   <div class="card" style="width: 18rem; margin: 1rem">

@@ -1,3 +1,6 @@
+from products.forms import TestForm
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.views.generic.base import View, TemplateView
 from math import prod
 import os
@@ -20,8 +23,8 @@ def list_products(request):
     # print(products.query)
 
     products = Product.objects.get_availibes()
-    for p in products:
-        print(p.get_price)
+    # for p in products:
+    #     print(p.get_price)
     return render(request, 'products/list-products.html', {'products': products})
 
 
@@ -104,14 +107,8 @@ def show_news(request):
 
 @login_required
 def home(request):
-
-    #print("request", dir(request))
-    # print(request.path)
-
-    # if request.user.is_authenticated:
-    return render(request, 'index.html', {"title": "Hello World 2", "name": "Ahmad"})
-    # else:
-    #     return HttpResponse("Please Login to access this page.")
+    form = TestForm()
+    return render(request, 'index.html', {"title": "Hello World 2", "name": "Ahmad", 'form': form})
 
 
 def product_detail(request, prod_slug):
@@ -132,3 +129,21 @@ class ListProduct(TemplateView):
     #     return ['about.html']
 
     pass
+
+
+class ProductListView(ListView):
+    # model = Product
+    queryset = Product.objects.get_availibes()
+    template_name = 'products/list-products.html'
+    context_object_name = 'products'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'List View'
+        return context
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'products/product-detail.html'
+    # slug_field = 'id'
