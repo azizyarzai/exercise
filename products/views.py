@@ -1,8 +1,7 @@
-from products.forms import TestForm
+from products.forms import ProductModelForm, TestForm
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.base import View, TemplateView
-from math import prod
 import os
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -107,8 +106,33 @@ def show_news(request):
 
 @login_required
 def home(request):
-    form = TestForm()
-    return render(request, 'index.html', {"title": "Hello World 2", "name": "Ahmad", 'form': form})
+    if request.method == 'GET':
+        # form = TestForm(initial={'age': 12, 'name': 'karim'})
+        form = TestForm()
+        return render(request, 'index.html', {"title": "Hello World 2", "name": "Ahmad", 'form': form})
+    else:
+        # request.POST.update(image=request.FILES.get('image'))
+        form = TestForm(request.POST, request.FILES)
+        if form.is_valid():
+            print(form.cleaned_data)
+
+            return HttpResponse("Submited")
+        print(form.errors)
+        return render(request, 'index.html', {"title": "Hello World 2", "name": "Ahmad", 'form': form})
+
+    # if request.method == 'GET':
+    #     form = ProductModelForm()
+    #     return render(request, 'index.html', {"title": "Hello World 2", "name": "Ahmad", 'form': form})
+    # else:
+    #     # request.POST.update(image=request.FILES.get('image'))
+    #     form = ProductModelForm(request.POST, request.FILES)
+    #     if form.is_valid():
+    #         print(form.cleaned_data)
+    #         form.save()
+
+    #         return redirect(reverse_lazy('products:list'))
+    #     print(form.errors)
+    #     return render(request, 'index.html', {"title": "Hello World 2", "name": "Ahmad", 'form': form})
 
 
 def product_detail(request, prod_slug):

@@ -26,7 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("products/", include("products.urls")),
     path('news/hi/', show_news),
-    path("", home)
+    path("", home, name="home")
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
