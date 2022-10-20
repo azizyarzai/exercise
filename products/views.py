@@ -1,12 +1,15 @@
+from django.views.generic.edit import CreateView, UpdateView
 from products.forms import ProductModelForm, TestForm
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.base import View, TemplateView
 import os
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
+from django.contrib import messages
+
 
 from django.db.models import Q
 
@@ -46,7 +49,7 @@ def create_product(request):
             description=desc,
             image=image
         )
-
+        messages.success(request, 'Product created succesfully.')
         # product.price = float(product.price) +  100
         # product.save()
 
@@ -136,7 +139,14 @@ def home(request):
 
 
 def product_detail(request, prod_slug):
-    product = Product.objects.get(slug=prod_slug)
+    try:
+        product = Product.objects.get(slug=prod_slug)
+    except Product.DoesNotExist:
+        raise Http404()
+    except Product.MultipleObjectsReturned:
+        return render(request, 'index.html')
+
+    # product = get_object_or_404(Product, slug=prod_slug)
     return render(request, 'products/product-detail.html', {'product': product})
 
 
@@ -171,3 +181,19 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = 'products/product-detail.html'
     # slug_field = 'id'
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ['name', 'price', 'is_available',
+              'description', 'image', 'category']
+    template_name = 'products/create-class.html'
+    success_url = reverse_lazy("products:list")
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = ['name', 'price', 'is_available',
+              'description', 'image', 'category']
+    template_name = 'products/update-class.html'
+    success_url = reverse_lazy("products:list")

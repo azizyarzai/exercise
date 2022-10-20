@@ -5,6 +5,7 @@ from django.utils.text import slugify
 from products.utils import unique_slug_generator
 from django.db.models.signals import pre_save, post_save
 from products.model_managers import ProductManager
+from django.contrib.auth.models import User
 
 CATEGORIES = [
     ("el", 'Electronics'),
@@ -20,11 +21,19 @@ def check_price(val):
 
 class Product(models.Model):
     name = models.CharField(
-        max_length=150, help_text="Name should be unique.", unique=True,
+        max_length=150, help_text="Name should be unique.",
         error_messages={
             "blank": "Please enter a value.",
             'unique': "Please enter a unique name.",
         })
+
+    # user = models.ForeignKey(
+    #     User, on_delete=models.CASCADE, related_name='products')
+    # user = models.OneToOneField(
+    #     User, on_delete=models.CASCADE, related_name='products',)
+    user = models.ManyToManyField(
+        User, related_name='products')
+
     slug = models.SlugField(max_length=500, unique=True)
     price = models.DecimalField(
         max_digits=10, decimal_places=2, validators=[check_price])
@@ -44,10 +53,10 @@ class Product(models.Model):
     def get_price(self):
         return int(self.price)
 
-    def save(self):
+    def save(self, *args, **kwaargs):
         # self.price = float(self.price) + 10
         # self.slug = unique_slug_generator(self)
-        super().save()
+        super().save(*args, **kwaargs)
 
     def __str__(self) -> str:
         return f"{self.name} - {self.pk}"

@@ -1,6 +1,4 @@
-{% extends 'base.html' %} 
-{% load static %} 
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <h1>Title: {{title}}</h1>
 <div style="display: flex; justify-content: center; flex-wrap: wrap">
   {% for product in products %}
@@ -16,12 +14,15 @@
     />
     {% endif %}
     <div class="card-body">
-      <h5 class="card-title">Name: {{product.name}}</h5>
+      <h5 class="card-title {% cycle 'green' 'blue' 'red' %}">
+        Name: {{product.name}}
+      </h5>
       <p class="card-text">Price: {{ product.get_price }}AFN</p>
       <p class="card-text">Category: {{ product.category }}</p>
       <p class="card-text">Desc: {{ product.description }}</p>
       <p class="card-text">Updated: {{ product.updated }}</p>
       <p class="card-text">Created: {{ product.created }}</p>
+      <p class="card-text">USer: {{ product.user.first_name }}</p>
       <!-- <a href="/products/update/{{product.id}}/" class="btn btn-primary">Update</a>
           <a href="/products/delete/{{product.id}}/" class="btn btn-danger">Delete</a> -->
       <a href="{% url 'products:update' product.slug %}" class="btn btn-primary"

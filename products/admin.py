@@ -6,7 +6,8 @@ from products.models import Product
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'slug', 'category', 'price', 'is_available']
+    list_display = ['id', 'name',  'slug',
+                    'category', 'price', 'is_available']
     list_display_links = ['name']
     list_editable = ['is_available', 'price']
     list_filter = ['is_available', 'created']
@@ -14,5 +15,6 @@ class ProductAdmin(admin.ModelAdmin):
     list_per_page = 25
     ordering = ['-price']
     search_fields = ['name', 'price']
+
 
 # admin.site.register(Product, ProductAdmin)
