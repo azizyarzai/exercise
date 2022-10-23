@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.views.generic.edit import CreateView, UpdateView
 from products.forms import ProductModelForm, TestForm
 from django.views.generic.list import ListView
@@ -173,7 +174,9 @@ class ProductListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'List View'
+        context['title'] = 'list View'
+        context['no'] = 50
+        context['today'] = datetime.now()
         return context
 
 
