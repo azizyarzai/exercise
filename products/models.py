@@ -5,7 +5,9 @@ from django.utils.text import slugify
 from products.utils import unique_slug_generator
 from django.db.models.signals import pre_save, post_save
 from products.model_managers import ProductManager
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 CATEGORIES = [
     ("el", 'Electronics'),
@@ -64,6 +66,7 @@ class Product(models.Model):
     class Meta:
         db_table = 'product'
         ordering = ['price']
+        verbose_name_plural = 'products master'
 
 
 class Test(models.Model):

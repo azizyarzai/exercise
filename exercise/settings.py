@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'products'
+    'products',
+    'accounts'
 ]
 
 MIDDLEWARE = [
@@ -80,7 +81,7 @@ WSGI_APPLICATION = 'exercise.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'exercise',
+        'NAME': 'exercise2',
         "USER": 'postgres',
         'PASSWORD': 'postgres',
     }
@@ -136,3 +137,6 @@ LOGIN_URL = '/admin/login/'
 MEDIA_URL = 'media/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+AUTH_USER_MODEL = 'accounts.Account'
