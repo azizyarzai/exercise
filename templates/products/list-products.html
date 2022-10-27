@@ -1,9 +1,9 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
-{% include 'partials/_navbar.html' with data="test data" color="red" %}
-{% include 'partials/_navbar.html' with data=title color='green' %}
+<!-- {% include 'partials/_navbar.html' with data="test data" color="red" %}
+{% include 'partials/_navbar.html' with data=title color='green' %} -->
 {% include 'partials/_navbar.html' %}
 
-<h1>Title: {{title}}</h1>
+<!-- <h1>Title: {{title}}</h1>   -->
 <div style="display: flex; justify-content: center; flex-wrap: wrap">
   {% for product in products %}
   <div class="card" style="width: 18rem; margin: 1rem">

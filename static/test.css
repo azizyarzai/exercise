@@ -11,12 +11,15 @@ body {
     padding: 1rem;
 }
 
-.green {
+.green, .success {
     background-color: green;
+    color: white;
+
 }
 .blue {
     background-color: blue;
 }
-.red {
+.red, .error {
     background-color: red;
+    color: white;
 }

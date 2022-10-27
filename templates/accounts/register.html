@@ -1,0 +1,28 @@
+{% extends 'base.html' %} 
+{% block content %} 
+<h3 style="text-align: center">Register user</h3>
+<div style="display: flex; justify-content: center;">
+
+<form method="post" style="width: 450px;" >
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Email</label>
+        <input type="email" required name="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Name</label>
+        <input type="text" name="name" required class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Password</label>
+        <input type="password" required name="pass1" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Confirm Password</label>
+        <input type="password" required name="pass2" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+      </div>
+      <input type="submit" value="Register" class="btn btn-danger" />
+</form>
+
+</div>
+{% endblock content %}
