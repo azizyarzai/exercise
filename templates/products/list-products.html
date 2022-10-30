@@ -40,6 +40,25 @@
       >
     </div>
   </div>
+  <div id="api"></div>
+
+  <script>
+    const div = document.getElementById("api");
+    console.log("Start");
+    setTimeout(() => {
+      console.log("is called after 3sec");
+    }, 3000);
+    console.log("After timer");
+    let result = "";
+    fetch("http://127.0.0.1:8000/api/products/")
+      .then((res) => res.json())
+      .then((data) => {
+        Array.from(data).forEach((product) => {
+          result += `<li>Name: ${product.name}</li><li>Price: ${product.price}</li><hr >`;
+        });
+        div.innerHTML = result;
+      });
+  </script>
   {% endfor %}
 </div>
 

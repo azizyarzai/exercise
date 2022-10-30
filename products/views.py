@@ -1,3 +1,7 @@
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+import json
+from django.http import JsonResponse
 from datetime import datetime
 from django.views.generic.edit import CreateView, UpdateView
 from products.forms import ProductModelForm, TestForm
@@ -200,3 +204,17 @@ class ProductUpdateView(UpdateView):
               'description', 'image', 'category']
     template_name = 'products/update-class.html'
     success_url = reverse_lazy("products:list")
+
+
+# def test(request):
+#     if request.method == 'POST':
+#         data = json.loads(request.body)
+#         return JsonResponse(data, safe=False)
+
+#     return JsonResponse([{"name": "product 1", "price": 1400}, {"name": "product 2", "price": 1500}], safe=False)
+
+
+@api_view(['GET', 'POST'])
+def test(request):
+    # print(request.data[0]['age'])
+    return Response([{"name": "product 1", "price": 20000}, {"name": "product 2", "price": 1500}])

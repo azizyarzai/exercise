@@ -20,6 +20,7 @@ from products.views import show_news, home
 
 from django.conf import settings
 from django.conf.urls.static import static
+from products.views import test
 
 
 urlpatterns = [
@@ -27,6 +28,7 @@ urlpatterns = [
     path("products/", include("products.urls")),
     path("accounts/", include("accounts.urls")),
     path('news/hi/', show_news),
+    path("api/products/", test),
     path("", home, name="home")
 ]
 
