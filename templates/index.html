@@ -8,16 +8,20 @@
   </head>
   <body>
     <div style="margin-left: 100px">
-      <h1 style="color: red">Welcome to Django</h1>
+      <h1 style="color: red">Welcome to Django - Deployed to Heroku</h1>
       <p>dkjdhfkdsjhfdskjk {{title}} dkfhskjfhsdkj {{name}}</p>
       <p>{{user.username}}</p>
 
-      <form action="{% url 'home' %}" method="post" enctype="multipart/form-data">
+      <form
+        action="{% url 'home' %}"
+        method="post"
+        enctype="multipart/form-data"
+      >
         {% csrf_token %}
 
         <!-- <p>{{form.name.label}} - {{form.name }}</p> -->
         {{form.as_p}}
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" />
       </form>
     </div>
   </body>
