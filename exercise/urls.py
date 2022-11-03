@@ -16,19 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.http import HttpResponse
-from products.views import show_news, home
+from products.views.views import show_news, home
 
 from django.conf import settings
 from django.conf.urls.static import static
-from products.views import test
+from products.views.views import test, ProductAPIView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("products/", include("products.urls")),
+    path("api/products/", include("products.urls_api")),
     path("accounts/", include("accounts.urls")),
     path('news/hi/', show_news),
-    path("api/products/", test),
+    # path("api/products/", ProductAPIView.as_view()),
     path("", home, name="home")
 ]
 

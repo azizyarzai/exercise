@@ -1,3 +1,4 @@
+from products.serializers import Test
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 import json
@@ -14,6 +15,7 @@ from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.contrib import messages
+from rest_framework.views import APIView
 
 
 from django.db.models import Q
@@ -218,3 +220,21 @@ class ProductUpdateView(UpdateView):
 def test(request):
     # print(request.data[0]['age'])
     return Response([{"name": "product 1", "price": 20000}, {"name": "product 2", "price": 1500}])
+
+
+class ProductAPIView(APIView):
+    def get(self, request, *arg, **kwaargs):
+        return Response([{"name": "product 1", "price": 20000}, {"name": "product 2", "price": 1500}])
+
+    def post(self, request, *arg, **kwaargs):
+        res = Test(data=request.data)
+        data1 = {
+            "name": 'jdsfhskdjfhsksdfj',
+            'price': 12
+        }
+        if res.is_valid():
+            res2 = Test(data1)
+            print(res2.is_valid())
+            return Response(res2.data)
+        else:
+            return Response(res.errors)
