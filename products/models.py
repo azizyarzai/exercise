@@ -29,16 +29,16 @@ class Product(models.Model):
             'unique': "Please enter a unique name.",
         })
 
-    # user = models.ForeignKey(
-    #     User, on_delete=models.CASCADE, related_name='products')
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='products')
     # user = models.OneToOneField(
     #     User, on_delete=models.CASCADE, related_name='products',)
-    user = models.ManyToManyField(
-        User, related_name='products')
+    # user = models.ManyToManyField(
+    #     User, related_name='products')
 
     slug = models.SlugField(max_length=500, unique=True)
-    price = models.DecimalField(
-        max_digits=10, decimal_places=2, validators=[check_price])
+    price = models.FloatField(
+        validators=[check_price])
     category = models.CharField(max_length=20, choices=CATEGORIES)
     is_available = models.BooleanField(default=True)
     image = models.ImageField(upload_to='products-imgs', null=True, blank=True)
