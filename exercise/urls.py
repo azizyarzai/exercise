@@ -29,6 +29,7 @@ urlpatterns = [
     path("api/products/", include("products.urls_api")),
     path("accounts/", include("accounts.urls")),
     path('news/hi/', show_news),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     # path("api/products/", ProductAPIView.as_view()),
     path("", home, name="home")
 ]

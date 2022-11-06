@@ -1,5 +1,5 @@
 
-from django.urls import path, include
+from django.urls import path, include, re_path
 from products.views.api import product_list, ProductListView, ProductCreateView, ProdcutViewSet
 from rest_framework.routers import DefaultRouter
 
@@ -10,7 +10,7 @@ app_name = 'products-api'
 
 
 urlpatterns = [
-    path("", ProductListView.as_view()),
+    path("", product_list),
     path("create/", ProductCreateView.as_view()),
     path("viewset/", include(router.urls))
 
